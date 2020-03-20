@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 //Route imports starts here.......
 const AdminAuthRoute = require("./Routes/Admin/Auth");
 const AdminCatRoute = require("./Routes/Admin/cat");
+const VendorAuthRoute = require("./Routes/Vendor/auth");
 //Route imports ends here.........
 
 //Middle ware imports starts here.....
@@ -24,6 +25,7 @@ app.use(corsMiddleWare);
 //Routes registering starts here.......
 app.use("/admin/auth", AdminAuthRoute);
 app.use("/admin/cat", AdminCatRoute);
+app.use("/vendor/auth", VendorAuthRoute);
 //Routes registering ends here.........
 
 //Handling 404 error.......
@@ -46,7 +48,7 @@ mongoose
 
     //socket setup................
     // process.env.PORT
-    const server = app.listen(process.env.PORT || 3000);
+    const server = app.listen(process.env.PORT || 3005);
     console.log("Server Activated Successfully");
   })
 
