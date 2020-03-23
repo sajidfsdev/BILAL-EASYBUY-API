@@ -82,8 +82,10 @@ exports.handleLogin = async (req, resp, next) => {
 
       if (compareres === true) {
         //Preparing JWT Token starts.......
+        console.log("About to login ");
+
         const payload = {
-          id: findres.id,
+          id: findres._id,
           email: findres.email,
           name: findres.name
         };

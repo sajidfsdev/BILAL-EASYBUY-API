@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 const AuthValidator = (req, resp, next) => {
+  console.log("REACHED AT AUTH VAL");
   const token = req.header(config.get("vendorHeader"));
 
   if (token === null) {
