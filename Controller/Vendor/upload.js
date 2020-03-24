@@ -1,4 +1,5 @@
 var uniqid = require("uniqid");
+const path = require("path");
 
 exports.handleUploadProductOne = (req, resp, next) => {
   const { id } = req;
@@ -32,8 +33,15 @@ exports.handleUploadProductOne = (req, resp, next) => {
       //file checking ends.......
 
       const serverFileName = uniqid() + file.name;
+      // ${__dirname}/../../uploads/vendor/products/${serverFileName}
       file.mv(
-        `${__dirname}/../../uploads/vendor/products/${serverFileName}`,
+        path.join(
+          path.dirname(process.mainModule.filename),
+          "uploads",
+          "vendor",
+          "products",
+          serverFileName
+        ),
         err => {
           if (err) {
             return resp.status(500).json({
@@ -84,7 +92,13 @@ exports.handleUploadProductTwo = (req, resp, next) => {
 
       const serverFileName = uniqid() + file.name;
       file.mv(
-        `${__dirname}/../../uploads/vendor/products/${serverFileName}`,
+        path.join(
+          path.dirname(process.mainModule.filename),
+          "uploads",
+          "vendor",
+          "products",
+          serverFileName
+        ),
         err => {
           if (err) {
             return resp.status(500).json({
@@ -135,7 +149,13 @@ exports.handleUploadProductThree = (req, resp, next) => {
 
       const serverFileName = uniqid() + file.name;
       file.mv(
-        `${__dirname}/../../uploads/vendor/products/${serverFileName}`,
+        path.join(
+          path.dirname(process.mainModule.filename),
+          "uploads",
+          "vendor",
+          "products",
+          serverFileName
+        ),
         err => {
           if (err) {
             return resp.status(500).json({
@@ -186,7 +206,13 @@ exports.handleUploadProductFour = (req, resp, next) => {
 
       const serverFileName = uniqid() + file.name;
       file.mv(
-        `${__dirname}/../../uploads/vendor/products/${serverFileName}`,
+        path.join(
+          path.dirname(process.mainModule.filename),
+          "uploads",
+          "vendor",
+          "products",
+          serverFileName
+        ),
         err => {
           if (err) {
             return resp.status(500).json({

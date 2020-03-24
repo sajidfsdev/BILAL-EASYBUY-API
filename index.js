@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const expressFileUpload = require("express-fileupload");
+const path = require("path");
 
 //Route imports starts here.......
 const AdminAuthRoute = require("./Routes/Admin/Auth");
