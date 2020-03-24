@@ -37,7 +37,7 @@ exports.handleUploadProductOne = (req, resp, next) => {
       file.mv(
         path.join(
           path.dirname(process.mainModule.filename),
-          "app",
+
           "uploads",
           "vendor",
           "products",
