@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Product = new Schema({
   vendorId: {
     type: Schema.Types.ObjectId,
+    ref: "Vendor",
     required: true
   },
   name: {
