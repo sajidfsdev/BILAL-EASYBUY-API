@@ -1,59 +1,58 @@
-const VendorModel = require("./../../Model/Vendor/Auth");
+const BuyerModel = require("./../../Model/Buyer/Auth");
 const bcrypt = require("bcryptjs");
-const config = require("config");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 
-exports.handleRegisterVendor = async (req, resp, next) => {
-  let { name, email, title, city, address, contact, password } = req.body;
+exports.handleRegistration = async (req, resp, next) => {
+  //parsing req body......
+  let { name, email, city, contact, password } = req.body;
 
+  //logging........
+  //console.log(req.body);
+
+  //conversions.......
   name = name.toUpperCase();
-  title = title.toUpperCase();
   city = city.toUpperCase();
-  address = address.toUpperCase();
 
+  //logging....
+  //console.log(fname,lname);
+
+  //Encrypting password starts here....
   try {
-    const validateRes = await VendorModel.findOne({ email: email });
-
-    if (validateRes) {
+    //duplication checking starts.....
+    const dupres = await BuyerModel.findOne({ email });
+    if (dupres) {
       return resp.status(500).json({
-        errorMessage: "This Email Already Exists"
+        errorMessage: "This email address already exists"
       });
     }
 
-    const validateTitleRes = await VendorModel.findOne({ title: title });
-
-    if (validateTitleRes) {
-      return resp.status(500).json({
-        errorMessage: "Shop With This title already exists"
-      });
-    }
-
+    //duplication checking ends.......
     const bcryptres = await bcrypt.hash(password, 12);
     if (bcryptres) {
-      const newVendor = await new VendorModel({
+      //Password Hashed Successfully........
+      const Buyer = new BuyerModel({
         name: name,
         email: email,
-        title: title,
         city: city,
-        address: address,
         contact: contact,
         password: bcryptres
       });
 
-      const res = await newVendor.save();
+      const saveres = await Buyer.save();
 
-      if (res) {
-        return resp.status(200).json({
-          successMessage: "Registered Successfully"
+      if (saveres) {
+        return resp.status(201).json({
+          successMessage: "Buyer Has Been Added Successfully"
         });
       } else {
         return resp.status(500).json({
-          errorMessage: "Network Error"
+          errorMessage: "Error Occurred While Saving Information"
         });
       }
     } else {
       return resp.status(500).json({
-        errorMessage: "Error occurred while processing password"
+        errorMessage: "Error Occurred While Processing Password Authentication"
       });
     }
   } catch (err) {
@@ -61,7 +60,7 @@ exports.handleRegisterVendor = async (req, resp, next) => {
       errorMessage: err.message
     });
   }
-};
+}; //......................................Handle registrations ends here
 
 //Handle Login Starts Here..............................................
 exports.handleLogin = async (req, resp, next) => {
@@ -69,12 +68,13 @@ exports.handleLogin = async (req, resp, next) => {
   const { email, password } = req.body;
 
   //logging.....
+  console.log("Buyer Login");
   console.log(email);
   console.log(password);
 
   //verifying starts.....
   try {
-    const findres = await VendorModel.findOne({ email });
+    const findres = await BuyerModel.findOne({ email });
 
     if (findres) {
       //comparing password.........
@@ -87,7 +87,8 @@ exports.handleLogin = async (req, resp, next) => {
         const payload = {
           id: findres._id,
           email: findres.email,
-          name: findres.name
+          name: findres.name,
+          type: "Buyer"
         };
         jwt.sign(payload, config.get("secret"), (err, token) => {
           if (err) {
@@ -99,8 +100,7 @@ exports.handleLogin = async (req, resp, next) => {
               successMessage: "Logged In Successfully",
               token: token,
               name: findres.name,
-              email: findres.email,
-              type: "Vendor"
+              email: findres.email
             });
           }
         });

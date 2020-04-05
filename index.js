@@ -13,6 +13,8 @@ const VendorAuthRoute = require("./Routes/Vendor/auth");
 const VendorProductRoute = require("./Routes/Vendor/products");
 const VendorUploadRoute = require("./Routes/Vendor/upload");
 const BuyerProductRoutes = require("./Routes/Buyer/products");
+const BuyerAuthRoute = require("./Routes/Buyer/Auth");
+const BuyerProposalRoute = require("./Routes/Buyer/proposal");
 //Route imports ends here.........
 
 //Middle ware imports starts here.....
@@ -42,12 +44,14 @@ app.use("/vendor/auth", VendorAuthRoute);
 app.use("/vendor/products", VendorProductRoute);
 app.use("/vendor/upload", VendorUploadRoute);
 app.use("/buyer/products", BuyerProductRoutes);
+app.use("/buyer/auth", BuyerAuthRoute);
+app.use("/buyer/proposal", BuyerProposalRoute);
 //Routes registering ends here.........
 
 //Handling 404 error.......
 app.use((req, resp, next) => {
   return resp.status(404).json({
-    errorMessage: "404 Resource Does Not Exists"
+    errorMessage: "404 Resource Does Not Exists",
   });
 });
 //Handling 404 error.......
@@ -56,10 +60,10 @@ app.use((req, resp, next) => {
 mongoose
   .connect(config.get("db"), {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
 
-  .then(result => {
+  .then((result) => {
     console.log("Listening at port ");
 
     //socket setup................
@@ -68,6 +72,6 @@ mongoose
     console.log("Server Activated Successfully");
   })
 
-  .catch(err => {
+  .catch((err) => {
     console.log(err.message);
   });

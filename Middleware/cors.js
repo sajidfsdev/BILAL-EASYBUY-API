@@ -5,7 +5,7 @@ const cors = (req, resp, next) => {
 
   resp.setHeader(
     "Access-Control-Allow-Headers",
-    "Content-Type,Authoriation,x-auth-eptoken,x-auth-eptoken-vendor"
+    "Content-Type,Authoriation,x-auth-eptoken,x-auth-eptoken-vendor,x-auth-eptoken-buyer"
   );
 
   next();
