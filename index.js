@@ -12,9 +12,13 @@ const AdminCatRoute = require("./Routes/Admin/cat");
 const VendorAuthRoute = require("./Routes/Vendor/auth");
 const VendorProductRoute = require("./Routes/Vendor/products");
 const VendorUploadRoute = require("./Routes/Vendor/upload");
+const vendorProposalRoute = require("./Routes/Vendor/Proposal");
+const VendorConsignedRoute = require("./Routes/Vendor/Consigned");
 const BuyerProductRoutes = require("./Routes/Buyer/products");
 const BuyerAuthRoute = require("./Routes/Buyer/Auth");
 const BuyerProposalRoute = require("./Routes/Buyer/proposal");
+const BuyerConsignedRoute = require("./Routes/Buyer/Consigned");
+
 //Route imports ends here.........
 
 //Middle ware imports starts here.....
@@ -43,9 +47,12 @@ app.use("/admin/cat", AdminCatRoute);
 app.use("/vendor/auth", VendorAuthRoute);
 app.use("/vendor/products", VendorProductRoute);
 app.use("/vendor/upload", VendorUploadRoute);
+app.use("/vendor/proposal", vendorProposalRoute);
+app.use("/vendor/consigned", VendorConsignedRoute);
 app.use("/buyer/products", BuyerProductRoutes);
 app.use("/buyer/auth", BuyerAuthRoute);
 app.use("/buyer/proposal", BuyerProposalRoute);
+app.use("/buyer/consigned", BuyerConsignedRoute);
 //Routes registering ends here.........
 
 //Handling 404 error.......
