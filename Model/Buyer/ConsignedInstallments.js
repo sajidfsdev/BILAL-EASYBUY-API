@@ -33,6 +33,22 @@ const ConsignedSchema = new Schema({
     type: String,
     required: true,
   },
+  downCheck: {
+    type: Boolean,
+    required: false,
+  },
+  checkedArray: {
+    type: Array,
+    required: false,
+  },
+  downDate: {
+    type: String,
+    required: false,
+  },
+  installmentsDates: {
+    type: Array,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("Consigned", ConsignedSchema);

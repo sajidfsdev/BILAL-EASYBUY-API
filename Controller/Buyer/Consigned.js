@@ -86,3 +86,31 @@ exports.handleFetchConsignments = async (req, resp, next) => {
     });
   }
 }; //......................................Handle Fetch consignments
+
+exports.handleGetMyStatusConsignments = async (req, resp, next) => {
+  const id = req.id;
+  const status = req.body.status;
+
+  //try catch starts...
+  try {
+    const res = await ConsignedModel.find({
+      buyerId: id,
+      status: status,
+    }).populate("vendorId");
+
+    if (res) {
+      return resp.status(200).json({
+        data: res,
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To Perform Operation Due To Network Error",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+  //try catch ends.....
+}; //...............................Handle get status consinments

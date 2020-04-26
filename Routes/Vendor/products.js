@@ -6,5 +6,7 @@ const AuthVal = require("./../../Middleware/AuthVendor");
 
 exRoute.get("/getAllCats", adminCtrl.handleGetAllCats);
 exRoute.post("/add", AuthVal, ctrl.handleAddProduct);
+exRoute.post("/edit", AuthVal, ctrl.handleEditProduct);
+exRoute.post("/get", AuthVal, ctrl.handleGetAllMyProducts);
 
 module.exports = exRoute;
