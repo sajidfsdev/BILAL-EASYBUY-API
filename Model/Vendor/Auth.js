@@ -3,34 +3,38 @@ const Schema = mongoose.Schema;
 const VendorAuth = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
 
   email: {
     type: String,
-    required: true
+    required: true,
   },
 
   title: {
     type: String,
-    required: true
+    required: true,
   },
   city: {
     type: String,
-    required: true
+    required: true,
   },
 
   address: {
     type: String,
-    required: true
+    required: true,
   },
   contact: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  active: {
+    type: Boolean,
+    required: true,
+  },
 });
 module.exports = mongoose.model("Vendor", VendorAuth);

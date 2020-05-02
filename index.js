@@ -9,6 +9,7 @@ const path = require("path");
 //Route imports starts here.......
 const AdminAuthRoute = require("./Routes/Admin/Auth");
 const AdminCatRoute = require("./Routes/Admin/cat");
+const AdminTrafficRoute = require("./Routes/Admin/Traffic");
 const VendorAuthRoute = require("./Routes/Vendor/auth");
 const VendorProductRoute = require("./Routes/Vendor/products");
 const VendorUploadRoute = require("./Routes/Vendor/upload");
@@ -44,6 +45,7 @@ app.use(expressFileUpload());
 //Routes registering starts here.......
 app.use("/admin/auth", AdminAuthRoute);
 app.use("/admin/cat", AdminCatRoute);
+app.use("/admin/traffic", AdminTrafficRoute);
 app.use("/vendor/auth", VendorAuthRoute);
 app.use("/vendor/products", VendorProductRoute);
 app.use("/vendor/upload", VendorUploadRoute);

@@ -16,7 +16,7 @@ exports.handleRegisterVendor = async (req, resp, next) => {
 
     if (validateRes) {
       return resp.status(500).json({
-        errorMessage: "This Email Already Exists"
+        errorMessage: "This Email Already Exists",
       });
     }
 
@@ -24,7 +24,7 @@ exports.handleRegisterVendor = async (req, resp, next) => {
 
     if (validateTitleRes) {
       return resp.status(500).json({
-        errorMessage: "Shop With This title already exists"
+        errorMessage: "Shop With This title already exists",
       });
     }
 
@@ -37,28 +37,29 @@ exports.handleRegisterVendor = async (req, resp, next) => {
         city: city,
         address: address,
         contact: contact,
-        password: bcryptres
+        password: bcryptres,
+        active: true,
       });
 
       const res = await newVendor.save();
 
       if (res) {
         return resp.status(200).json({
-          successMessage: "Registered Successfully"
+          successMessage: "Registered Successfully",
         });
       } else {
         return resp.status(500).json({
-          errorMessage: "Network Error"
+          errorMessage: "Network Error",
         });
       }
     } else {
       return resp.status(500).json({
-        errorMessage: "Error occurred while processing password"
+        errorMessage: "Error occurred while processing password",
       });
     }
   } catch (err) {
     return resp.status(500).json({
-      errorMessage: err.message
+      errorMessage: err.message,
     });
   }
 };
@@ -83,16 +84,22 @@ exports.handleLogin = async (req, resp, next) => {
       if (compareres === true) {
         //Preparing JWT Token starts.......
         console.log("About to login ");
+        if (!findres.active) {
+          return resp.status(500).json({
+            errorMessage:
+              "Your account has been blocked by Admin. Kindly contact admin for further information",
+          });
+        }
 
         const payload = {
           id: findres._id,
           email: findres.email,
-          name: findres.name
+          name: findres.name,
         };
         jwt.sign(payload, config.get("secret"), (err, token) => {
           if (err) {
             return resp.status(500).json({
-              errorMessage: "Error occurred while processing token"
+              errorMessage: "Error occurred while processing token",
             });
           } else {
             return resp.status(200).json({
@@ -100,24 +107,24 @@ exports.handleLogin = async (req, resp, next) => {
               token: token,
               name: findres.name,
               email: findres.email,
-              type: "Vendor"
+              type: "Vendor",
             });
           }
         });
         //Preparing JWT Token ends here....
       } else {
         return resp.status(500).json({
-          errorMessage: "Sorry Username Or Password Is Incorrect"
+          errorMessage: "Sorry Username Or Password Is Incorrect",
         });
       }
     } else {
       return resp.status(500).json({
-        errorMessage: "Sorry Username Or Password Is Incorrect"
+        errorMessage: "Sorry Username Or Password Is Incorrect",
       });
     }
   } catch (err) {
     return resp.status(500).json({
-      errorMessage: err.message
+      errorMessage: err.message,
     });
   }
 };
