@@ -42,12 +42,12 @@ exports.handleRequestConsignment = async (req, resp, next) => {
               successMessage: "Consignment Added Successfully",
             });
           } else {
-            return resp.status(500).json({
+            return resp.status(200).json({
               errorMessage: "Failed To Delete Proposals",
             });
           }
         } else {
-          return resp.status(500).json({
+          return resp.status(200).json({
             errorMessage: "Failed To Delete Collaborators",
           });
         }

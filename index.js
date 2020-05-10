@@ -11,17 +11,21 @@ const AdminAuthRoute = require("./Routes/Admin/Auth");
 const AdminCatRoute = require("./Routes/Admin/cat");
 const AdminTrafficRoute = require("./Routes/Admin/Traffic");
 const AdminMessagesRoute = require("./Routes/Admin/Messages");
+const AdminReportedRoute = require("./Routes/Admin/Report");
 const VendorAuthRoute = require("./Routes/Vendor/auth");
 const VendorProductRoute = require("./Routes/Vendor/products");
 const VendorUploadRoute = require("./Routes/Vendor/upload");
 const vendorProposalRoute = require("./Routes/Vendor/Proposal");
 const VendorConsignedRoute = require("./Routes/Vendor/Consigned");
+const VendorMessageRoute = require("./Routes/Vendor/Message");
 const BuyerProductRoutes = require("./Routes/Buyer/products");
 const BuyerAuthRoute = require("./Routes/Buyer/Auth");
 const BuyerProposalRoute = require("./Routes/Buyer/proposal");
 const BuyerConsignedRoute = require("./Routes/Buyer/Consigned");
+const BuyerMessageRoute = require("./Routes/Buyer/Message");
 const GeneralProductRoutes = require("./Routes/General/Products");
 const GeneralMessageRoute = require("./Routes/General/Message");
+const BuyerReportRoute = require("./Routes/Buyer/Report");
 
 //Route imports ends here.........
 
@@ -50,15 +54,19 @@ app.use("/admin/auth", AdminAuthRoute);
 app.use("/admin/cat", AdminCatRoute);
 app.use("/admin/traffic", AdminTrafficRoute);
 app.use("/admin/messages", AdminMessagesRoute);
+app.use("/admin/report", AdminReportedRoute);
 app.use("/vendor/auth", VendorAuthRoute);
 app.use("/vendor/products", VendorProductRoute);
 app.use("/vendor/upload", VendorUploadRoute);
 app.use("/vendor/proposal", vendorProposalRoute);
 app.use("/vendor/consigned", VendorConsignedRoute);
+app.use("/vendor/message", VendorMessageRoute);
 app.use("/buyer/products", BuyerProductRoutes);
 app.use("/buyer/auth", BuyerAuthRoute);
 app.use("/buyer/proposal", BuyerProposalRoute);
 app.use("/buyer/consigned", BuyerConsignedRoute);
+app.use("/buyer/message", BuyerMessageRoute);
+app.use("/buyer/report", BuyerReportRoute);
 app.use("/general/products", GeneralProductRoutes);
 app.use("/general/message", GeneralMessageRoute);
 //Routes registering ends here.........

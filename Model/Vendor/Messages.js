@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const BuyerMessages = new Schema({
-  buyerId: {
+const VendorMessages = new Schema({
+  vendorId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Buyer",
+    ref: "Vendor",
   },
   date: {
     type: String,
@@ -28,4 +28,4 @@ const BuyerMessages = new Schema({
     required: false,
   },
 });
-module.exports = mongoose.model("BuyerMessages", BuyerMessages);
+module.exports = mongoose.model("VendorMessages", VendorMessages);

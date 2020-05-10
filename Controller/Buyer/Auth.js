@@ -130,3 +130,100 @@ exports.handleLogin = async (req, resp, next) => {
   }
 };
 ////...........................................Handle Login Ends Here...
+
+exports.handleGetProfileInfo = async (req, resp, next) => {
+  const _id = req.id;
+  try {
+    const res = await BuyerModel.findById(_id);
+
+    if (res) {
+      return resp.status(200).json({
+        data: res,
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To Load Resources Due To Network Error",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //.........................................Handle Get Profile Info
+
+exports.handleEditProfileInfo = async (req, resp, next) => {
+  let { name, email, city, contact } = req.body;
+  const _id = req.id;
+  try {
+    const saveRes = await BuyerModel.findOneAndUpdate(
+      { _id },
+      {
+        name,
+        email,
+        city,
+        contact,
+      }
+    );
+
+    if (saveRes) {
+      return resp.status(200).json({
+        successMessage: "Profile Updated Successfully",
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To Edit Info",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //.....................................Handle edit peofile info
+
+exports.handleEditPassword = async (req, resp, next) => {
+  let { password, oldPassword } = req.body;
+  const _id = req.id;
+
+  try {
+    const res = await BuyerModel.findById(_id);
+
+    if (res) {
+      const compareres = await bcrypt.compare(oldPassword, res.password);
+
+      if (compareres === true) {
+        const bcryptres = await bcrypt.hash(password, 12);
+        if (bcryptres) {
+          res.password = bcryptres;
+          const saveRes = await res.save();
+          if (saveRes) {
+            return resp.status(200).json({
+              successMessage: "Password Updated Successfully",
+            });
+          } else {
+            return resp.status(500).json({
+              errorMessage: "Failed To Update Password",
+            });
+          }
+        } else {
+          return resp.status(500).json({
+            errorMessage: "Failed To Hash Password",
+          });
+        }
+      } else {
+        return resp.status(500).json({
+          errorMessage: "You have typed incorrect current Password",
+        });
+      }
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To Get Profile Info",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //.....................................Handle edit Password
