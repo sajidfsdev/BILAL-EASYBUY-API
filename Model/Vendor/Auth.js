@@ -36,6 +36,11 @@ const VendorAuth = new Schema({
     type: Boolean,
     required: true,
   },
+  hibernate: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Vendor", VendorAuth);

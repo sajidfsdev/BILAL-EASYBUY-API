@@ -8,5 +8,6 @@ exRoute.get("/getAllCats", adminCtrl.handleGetAllCats);
 exRoute.post("/add", AuthVal, ctrl.handleAddProduct);
 exRoute.post("/edit", AuthVal, ctrl.handleEditProduct);
 exRoute.post("/get", AuthVal, ctrl.handleGetAllMyProducts);
+exRoute.post("/delete", AuthVal, ctrl.handleDeleteProduct);
 
 module.exports = exRoute;

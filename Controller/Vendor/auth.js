@@ -228,3 +228,31 @@ exports.handleEditPassword = async (req, resp, next) => {
     });
   }
 }; //.....................................Handle edit Password
+
+exports.handleChangeHibernateStatus = async (req, resp, next) => {
+  console.log("Reached at change hibernate status");
+  const { hibernate } = req.body;
+  const id = req.id;
+  console.log(hibernate);
+  console.log(id);
+
+  try {
+    const res = await VendorModel.findByIdAndUpdate(id, { hibernate });
+
+    if (res) {
+      return resp.status(200).json({
+        successMessage: "Status updated successfully",
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To Update Status Due To Network Error",
+      });
+    }
+  } catch (err) {
+    console.log("error has occurred");
+    console.log(err.message);
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //.......................Handle change hibernate status

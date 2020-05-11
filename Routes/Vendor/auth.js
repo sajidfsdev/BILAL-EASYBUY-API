@@ -8,5 +8,6 @@ exRouter.post("/login", ctrl.handleLogin);
 exRouter.post("/get", AuthVal, ctrl.handleGetProfileInfo);
 exRouter.post("/edit", AuthVal, ctrl.handleEditProfileInfo);
 exRouter.post("/editPassword", AuthVal, ctrl.handleEditPassword);
+exRouter.post("/hibernate", AuthVal, ctrl.handleChangeHibernateStatus);
 
 module.exports = exRouter;

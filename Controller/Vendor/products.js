@@ -1,4 +1,6 @@
 const ProductModel = require("./../../Model/Vendor/Product");
+const ConsignedModel = require("./../../Model/Buyer/ConsignedInstallments");
+const CollaboratorsModel = require("./../../Model/Buyer/Collaborators");
 
 exports.handleEditProduct = async (req, resp, next) => {
   console.log("Handle edit product called");
@@ -144,3 +146,43 @@ exports.handleGetAllMyProducts = async (req, resp, next) => {
   }
   //try catch ends.......
 }; //...............................................Handle Get My Products
+
+exports.handleDeleteProduct = async (req, resp, next) => {
+  const { productId } = req.body;
+
+  try {
+    const collFind = await CollaboratorsModel.findOne({ productId });
+
+    if (collFind) {
+      return resp.status(500).json({
+        errorMessage:
+          "Product that are present in collaborators could not be deleted",
+      });
+    } else {
+      const consFind = await ConsignedModel.findOne({ productId });
+
+      if (consFind) {
+        return resp.status(500).json({
+          errorMessage:
+            "Product that are present in consignments could not be deleted",
+        });
+      } else {
+        const delRes = await ProductModel.findByIdAndDelete(productId);
+
+        if (delRes) {
+          return resp.status(200).json({
+            successMessage: "Product has been deleted successfully",
+          });
+        } else {
+          return resp.status(500).json({
+            errorMessage: "Failed To Delete Product Due To Network Error",
+          });
+        }
+      }
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //........................Handle Delete Product
