@@ -114,3 +114,25 @@ exports.handleGetMyStatusConsignments = async (req, resp, next) => {
   }
   //try catch ends.....
 }; //...............................Handle get status consinments
+
+exports.handleDeleteRejectedRequests = async (req, resp, next) => {
+  const { id } = req.body;
+
+  try {
+    const res = await ConsignedModel.findByIdAndDelete(id);
+
+    if (res) {
+      return resp.status(200).json({
+        successMessage: "Records Deleted Successfully",
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Failed To delete Record Due To Network Error",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //................................Handle delete rejected requests

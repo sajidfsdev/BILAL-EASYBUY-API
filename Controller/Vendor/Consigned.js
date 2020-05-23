@@ -28,6 +28,15 @@ exports.handleGetConsigned = async (req, resp, next) => {
 exports.handleSetStatus = async (req, resp, next) => {
   const id = req.body.id;
   const status = req.body.status;
+  console.log("REACHECD AT STAUS UPDATION");
+  console.log(req.body.status);
+  console.log("REACHECD AT STAUS UPDATION");
+  console.log("REACHECD AT STAUS UPDATION");
+  console.log("REACHECD AT STAUS UPDATION");
+
+  console.log("REACHECD AT STAUS UPDATION");
+
+  console.log("REACHECD AT STAUS UPDATION");
 
   try {
     //Testing Area starts....
@@ -46,6 +55,11 @@ exports.handleSetStatus = async (req, resp, next) => {
       res.checkedArray = [...checkedArray];
       res.downDate = downDate;
       res.installmentsDates = [...installmentsDates];
+      if (status === "REJECTED") {
+        console.log("STATUS REJECTED DETECTED");
+        res.reason = req.body.reason;
+        console.log(req.body.status);
+      }
       const saveRes = await res.save();
       if (saveRes) {
         return resp.status(200).json({

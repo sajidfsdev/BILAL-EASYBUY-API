@@ -16,6 +16,10 @@ const ConsignedSchema = new Schema({
     required: true,
     type: String,
   },
+  reason: {
+    required: false,
+    type: String,
+  },
   installmentPlan: {
     type: Object,
     required: true,

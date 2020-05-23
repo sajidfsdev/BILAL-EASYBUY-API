@@ -6,5 +6,6 @@ const AuthVal = require("./../../Middleware/AuthBuyer");
 exRoute.post("/request", AuthVal, ctrl.handleRequestConsignment);
 exRoute.post("/fetch", AuthVal, ctrl.handleFetchConsignments);
 exRoute.post("/get", AuthVal, ctrl.handleGetMyStatusConsignments);
+exRoute.post("/delete", AuthVal, ctrl.handleDeleteRejectedRequests);
 
 module.exports = exRoute;
