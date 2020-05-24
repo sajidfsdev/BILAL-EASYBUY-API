@@ -1,5 +1,30 @@
 const ConsignedModel = require("./../../Model/Buyer/ConsignedInstallments");
 
+exports.handleGetMyStats = async (req, resp, next) => {
+  const vendorId = req.id;
+
+  try {
+    const res = await ConsignedModel.find({
+      $or: [{ status: "APPROVED" }, { status: "COMPLETED" }],
+      $and: [{ vendorId }],
+    });
+
+    if (res) {
+      return resp.status(200).json({
+        data: res,
+      });
+    } else {
+      return resp.status(500).json({
+        errorMessage: "Network Error",
+      });
+    }
+  } catch (err) {
+    return resp.status(500).json({
+      errorMessage: err.message,
+    });
+  }
+}; //.......................handle get my stats
+
 exports.handleGetConsigned = async (req, resp, next) => {
   const vendorId = req.id;
   const status = req.body.status;

@@ -7,5 +7,6 @@ exRoute.post("/get", AuthVal, ctrl.handleGetConsigned);
 exRoute.post("/status", AuthVal, ctrl.handleSetStatus);
 exRoute.post("/update", AuthVal, ctrl.handleUpdateConsignment);
 exRoute.post("/finish", AuthVal, ctrl.handleCompleteAgreement);
+exRoute.get("/stats", AuthVal, ctrl.handleGetMyStats);
 
 module.exports = exRoute;
