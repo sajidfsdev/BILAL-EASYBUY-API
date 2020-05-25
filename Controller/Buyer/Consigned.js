@@ -10,7 +10,11 @@ exports.handleRequestConsignment = async (req, resp, next) => {
   const buyerId = req.id;
 
   try {
-    const checking = await ConsignedModel.findOne({ productId, buyerId });
+    const checking = await ConsignedModel.findOne({
+      productId,
+      buyerId,
+      $or: { status: "PENDING", status: "APPROVED" },
+    });
     if (checking) {
       return resp.status(500).json({
         errorMessage: "This product is already in your consigned List",
