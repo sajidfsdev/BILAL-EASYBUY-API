@@ -13,7 +13,7 @@ exports.handleRequestConsignment = async (req, resp, next) => {
     const checking = await ConsignedModel.findOne({
       productId,
       buyerId,
-      $or: { status: "PENDING", status: "APPROVED" },
+      $or: [{ status: "PENDING" }, { status: "APPROVED" }],
     });
     if (checking) {
       return resp.status(500).json({
