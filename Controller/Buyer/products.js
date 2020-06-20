@@ -1,5 +1,6 @@
 const ProductModel = require("./../../Model/Vendor/Product");
 const CollaboratorModel = require("./../../Model/Buyer/Collaborators");
+const ConsignedModel = require("./../../Model/Buyer/ConsignedInstallments");
 
 exports.handleGetAllProducts = async (req, resp, next) => {
   //try catch starts...
@@ -58,21 +59,45 @@ exports.handleAddCollaborators = async (req, resp, next) => {
         errorMessage: "This Product Already Exists In Your Collaborator List",
       });
     } else {
-      const newCollaboration = new CollaboratorModel({
-        buyerId,
-        productId,
-      });
-
-      const res = await newCollaboration.save();
-      if (res) {
-        return resp.status(200).json({
-          successMessage: "Product Added successfully",
-        });
-      } else {
+      const dupConsigned = await ConsignedModel.findOne({ $and: [{ buyerId }, { productId }, { status: { $not: /^COMPLETED$/ } }] });
+      if (dupConsigned) {
         return resp.status(500).json({
-          errorMessage: "Network error occurred",
+          errorMessage: "This Product Already Exists In Your Consignments List",
         });
       }
+      else {
+        const newCollaboration = new CollaboratorModel({
+          buyerId,
+          productId,
+        });
+
+        const res = await newCollaboration.save();
+        if (res) {
+          return resp.status(200).json({
+            successMessage: "Product Added successfully",
+          });
+        } else {
+          return resp.status(500).json({
+            errorMessage: "Network error occurred",
+          });
+        }
+
+      }
+      // const newCollaboration = new CollaboratorModel({
+      //   buyerId,
+      //   productId,
+      // });
+
+      // const res = await newCollaboration.save();
+      // if (res) {
+      //   return resp.status(200).json({
+      //     successMessage: "Product Added successfully",
+      //   });
+      // } else {
+      //   return resp.status(500).json({
+      //     errorMessage: "Network error occurred",
+      //   });
+      // }
     }
     //checking pre-available ends......
   } catch (err) {
