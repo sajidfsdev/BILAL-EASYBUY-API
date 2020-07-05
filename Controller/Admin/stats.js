@@ -13,6 +13,8 @@ exports.handleGetStats = async (req, resp, next) => {
         const res = await ConsignedModel.find();
 
         if (res) {
+          console.log("Data retrieved");
+          console.log(res);
           return resp.status(200).json({
             vendors: VendorNumbers.length,
             buyers: BuyerNumbers.length,
